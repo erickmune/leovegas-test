@@ -10,10 +10,10 @@ const toQueryString = function (object) {
     return result;
 };
 
-const get = (parameters, callback) => {
+const get = (parameters, endpoint, callback) => {
     parameters = toQueryString(parameters);
     let myHeaders = new Headers();
-    let url = baseCTS.baseURL + baseCTS.searchAPI.searchMoviesURL + parameters;
+    let url = baseCTS.baseURL + endpoint + parameters;
     let myInit = {
         method: 'GET',
         headers: myHeaders,
@@ -22,7 +22,6 @@ const get = (parameters, callback) => {
     fetch(url, myInit)
     .then( res => {
         res.json().then(body => {
-            console.log(res.body);
             return callback(body);
         }).catch( err => {
             console.log('there is something wrong :/', err.message);
@@ -36,4 +35,35 @@ const get = (parameters, callback) => {
     
 };
 
-export default {get: get}
+const post = (parameters, bodyValues, endpoint, callback) => {
+    parameters = toQueryString(parameters);
+    let url = baseCTS.baseURL + endpoint + parameters;
+    let body = {};
+    let items = Object.keys(bodyValues);
+    items.forEach( key => {
+        body[key] = bodyValues[key]
+    })
+    let init = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    };
+    fetch(url, init)
+        .then(res => {
+            res.json().then(body => {    
+                console.log('Resposta da request: ', res);        
+                console.log('Body: ', body);    
+                return callback(body);//2.00
+            }).catch(err => {
+                alert('Houve um erro na resposta da sua 2a solicitação, por favor comunique à um Administrador');//2.00
+                console.log('Vide log do RESTLET controller.js. Erro no Post: '+err);
+            });
+        }).catch( err => {
+            alert('Houve um erro na resposta da sua 1a solicitação, por favor comunique à um Administrador');//2.00
+            console.log('Vide log do RESTLET controller.js. Erro no Post: '+err);
+        });
+}
+
+export default {get: get, post: post}

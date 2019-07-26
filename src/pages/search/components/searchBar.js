@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import MakeRequests from '../../../requests/MakeRequests';
 import Requests_CTS from '../../../requests/Requests_CTS';
+import PropTypes from 'prop-types';
 
 let styles = {
     container: {
@@ -18,7 +19,6 @@ let styles = {
     textField: {
         width: '70% !important'
     },
-    
     dense: {
         marginTop: 19
     }
@@ -34,6 +34,10 @@ class SearchBar extends Component {
         this.searchMovies = this.searchMovies.bind(this);
     }
 
+    getContent(values){
+        this.props.callback(values);
+    }
+
     handleChange(event){
         this.setState({value: event.target.value});
     }
@@ -44,9 +48,11 @@ class SearchBar extends Component {
             query: this.state.value
         };
 
-        MakeRequests.get(parameters, (res) => {
+        MakeRequests.get(parameters, Requests_CTS.searchAPI.searchMoviesURL, (res) => {
             if(!res.error){
-                console.log(JSON.stringify(res));
+                let requestResults = [];
+                res.results.map(result => requestResults.push(result));
+                this.getContent(requestResults);
             }
             else
                 console.log(res.message);
@@ -57,7 +63,7 @@ class SearchBar extends Component {
 
         let {classes} = this.props;
 
-        return(            
+        return(
             <>
                 <CssBaseline />
                 <Container className={classes.container}>
@@ -74,9 +80,13 @@ class SearchBar extends Component {
                         <SearchIcon/>
                     </IconButton>
                 </Container>
-            </>        
+            </>            
         )
     }
+}
+
+SearchBar.protoTypes = {
+    callback: PropTypes.func
 }
 
 export default withStyles(styles)(SearchBar)

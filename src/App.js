@@ -8,7 +8,7 @@ import SearchPage from './pages/search/searchPage';
 let styles = {};
 
 class App extends Component{
-  
+
   render(){
     return (      
         <Router>
@@ -20,7 +20,5 @@ class App extends Component{
     );
   }
 }
-
-
 
 export default withStyles(styles)(App);
