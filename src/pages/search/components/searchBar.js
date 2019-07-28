@@ -5,8 +5,7 @@ import Container from '@material-ui/core/Container';
 import SearchIcon from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
-import MakeRequests from '../../../requests/MakeRequests';
-import Requests_CTS from '../../../requests/Requests_CTS';
+import theMovieDb from '../../../lib/themoviedb';
 import PropTypes from 'prop-types';
 
 let styles = {
@@ -43,20 +42,11 @@ class SearchBar extends Component {
     }
 
     searchMovies(){
-        let parameters = {
-            api_key: Requests_CTS.API_key,
-            query: this.state.value
-        };
-
-        MakeRequests.get(parameters, Requests_CTS.searchAPI.searchMoviesURL, (res) => {
-            if(!res.error){
-                let requestResults = [];
-                res.results.map(result => requestResults.push(result));
-                this.getContent(requestResults);
-            }
-            else
-                console.log(res.message);
-        })
+        theMovieDb.search.getMovie({"query": encodeURIComponent(this.state.value)}, (res) => {
+            let requestResults = [];
+            JSON.parse(res).results.map(result => requestResults.push(result));
+            this.getContent(requestResults); 
+        }, (res) => { console.log(res.message) })
     }
 
     render(){

@@ -6,9 +6,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import StarRate from "@material-ui/icons/StarRate";
 import StarBorderOutlined from "@material-ui/icons/StarBorderOutlined";
 import TvSharp from "@material-ui/icons/TvSharp";
+import theMovieDb from '../../../lib/themoviedb';
 
 let styles = {
     root: {
@@ -28,13 +28,36 @@ let styles = {
 
 class SearchResults extends Component{
 
-    favoriteIt = () => {
+    constructor(){
+        super();
+        this.state = ({
+            session_id: "",        
+        })
+    }
 
+    createSession(token){
+        theMovieDb.authentication.generateSession({"request_token": token}, 
+            (res) => {
+                let result = JSON.parse(res);
+                if(result.success){
+                    console.log(result);
+                    this.setState({session_id: result.session_id});
+                }
+            },
+            (res) => {console.log(res)}
+        );    
+    }
+
+    favoriteIt = (requestToken) => {
+        if(!!requestToken){ // Checar se existe um id de session criado antes
+            this.createSession(requestToken);
+        }
     }
 
     render(){
         let {classes} = this.props;
         let data = this.props.data;
+        let requestToken = this.props.request_token;
         console.log(data);
         let length = data.length;
         return (            
@@ -60,7 +83,7 @@ class SearchResults extends Component{
                                         <TableCell>{result.title}</TableCell>
                                         <TableCell>{result.popularity}</TableCell>
                                         <TableCell>{result.overview}</TableCell>
-                                        <TableCell><StarBorderOutlined onClick={() => <StarRate /> }/> </TableCell>
+                                        <TableCell><StarBorderOutlined onClick={() => this.favoriteIt(requestToken) }/> </TableCell>
                                         <TableCell><TvSharp /></TableCell>
                                     </TableRow>
                                 )
