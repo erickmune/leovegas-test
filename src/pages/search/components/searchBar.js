@@ -45,7 +45,7 @@ class SearchBar extends Component {
         theMovieDb.search.getMovie({"query": encodeURIComponent(this.state.value)}, (res) => {
             let requestResults = [];
             JSON.parse(res).results.map(result => requestResults.push(result));
-            this.getContent(requestResults); 
+            this.getContent(requestResults);
         }, (res) => { console.log(res.message) })
     }
 
