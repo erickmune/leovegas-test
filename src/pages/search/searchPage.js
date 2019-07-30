@@ -22,8 +22,7 @@ class SearchPage extends Component{
         theMovieDb.authentication.generateToken((res) => {
             let result = JSON.parse(res);
             if(result.success){
-                token = result.request_token;
-                console.log('token: ' + token);
+                token = result.request_token;                
                 theMovieDb.authentication.askPermissions({"token": token});
                 this.setState({request_token: token});
             }   

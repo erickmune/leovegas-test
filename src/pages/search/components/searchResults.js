@@ -6,9 +6,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import StarBorderOutlined from "@material-ui/icons/StarBorderOutlined";
-import TvSharp from "@material-ui/icons/TvSharp";
 import theMovieDb from '../../../lib/themoviedb';
+import FavoriteButton from './favoriteButton';
+import WatchLaterButton from './watchLaterButton';
 
 let styles = {
     root: {
@@ -33,7 +33,8 @@ class SearchResults extends Component{
         this.state = ({
             session_id: '',
             user_id: '',
-            favorite_movies: null
+            favorite_movies: '',
+            watch_movies: ''
         })
     }
 
@@ -41,33 +42,17 @@ class SearchResults extends Component{
         this.props.callback(id);
     }
 
-    favoriteIt(id, token){
-              
+    favoriteIt(id, token){                      
         if(!this.state.session_id){
             theMovieDb.authentication.generateSession({'request_token': token}, 
                 (res) => {
                     let result = JSON.parse(res);
                     if(result.success){    
-                        this.setState({session_id: result.session_id});                        
-                        console.log(result.session_id);  
-                        this.updatePageSession(this.state.session_id);                                      
-                        theMovieDb.account.getInformation({'session_id': this.state.session_id}, (res) => {                                                
-                            let infoRes = JSON.parse(res);
-                            this.setState({user_id: infoRes.id});                            
-                            console.log(infoRes.id);
-                            theMovieDb.account.addFavorite({
-                                'id': this.state.user_id, 
-                                'session_id': this.state.session_id,
-                                'media_type': 'movie',
-                                'media_id': id, 
-                                'favorite': true},
-                                (res) => {
-                                    console.log(res);
-                                    console.log('the movie id ' + id + ' is now a favorite movie')
-                                    this.getFavoritesMovies();                                    
-                                },
-                                (rej) => {console.log(rej)}
-                            );            
+                        this.setState({session_id: result.session_id});
+                        this.updatePageSession(this.state.session_id);
+                        theMovieDb.account.getInformation({'session_id': this.state.session_id}, (res) => {
+                            this.setState({user_id: JSON.parse(res).id});
+                            this.commitFavoriteMovie(id);                                                          
                         },
                         (rej) => {
                             console.log(rej);    
@@ -77,47 +62,108 @@ class SearchResults extends Component{
                 (rej) => {console.log(rej)}
             );
         } else{
-            theMovieDb.account.getInformation({'session_id': this.state.session_id}, (res) => {                                                
-                let infoRes = JSON.parse(res);
-                this.setState({user_id: infoRes.id});                            
-                console.log(infoRes.id);
+            theMovieDb.account.getInformation({'session_id': this.state.session_id}, (res) => {
+                this.setState({user_id: JSON.parse(res).id});
+                this.commitFavoriteMovie(id);                                
+            },
+            (rej) => {
+                console.log(rej);
+            })
+        }
+    }
+
+    commitFavoriteMovie(id){                
+        theMovieDb.account.getFavoritesMovies({'id': this.state.user_id, 'session_id': this.state.session_id},
+            (res) => {
+                this.setState({favorite_movies: res.results});                    
+                let results = JSON.parse(res).results;                    
+                let isFavoriteMovie = results.filter(movie => 
+                    movie.id === id
+                );
                 theMovieDb.account.addFavorite({
                     'id': this.state.user_id, 
                     'session_id': this.state.session_id,
                     'media_type': 'movie',
                     'media_id': id, 
-                    'favorite': true},
-                    (res) => {
-                        console.log(res);
+                    'favorite': isFavoriteMovie.length === 0},
+                    (res) => {                                    
                         console.log('the movie id ' + id + ' is now a favorite movie')
-                        this.getFavoritesMovies();                                    
                     },
-                    (rej) => {console.log(rej)}
-                );            
-            },
-            (rej) => {
-                console.log(rej);    
-            })
-        }
-    }
+                    (rej) => {
+                        console.log('the movie id ' + id + ' is no more a favorite movie')
+                    }
+                );      
 
-    getFavoritesMovies(){
-        theMovieDb.account.getFavoritesMovies({'id': this.state.user_id, 'session_id': this.state.session_id},
-            (res) => {
-                this.setState({favorite_movies: res.results});
-                console.log('Favorite movies:');
-                console.log(JSON.parse(res));
             },
             (rej) => {
                 console.log(rej);
             }
-        );
+        );        
+    }
+
+    watchLater(id, token){
+        if(!this.state.session_id){
+            theMovieDb.authentication.generateSession({'request_token': token}, 
+                (res) => {
+                    let result = JSON.parse(res);
+                    if(result.success){    
+                        this.setState({session_id: result.session_id});
+                        this.updatePageSession(this.state.session_id);
+                        theMovieDb.account.getInformation({'session_id': this.state.session_id}, (res) => {
+                            this.setState({user_id: JSON.parse(res).id});
+                            this.commitWatchMovie(id);                                                          
+                        },
+                        (rej) => {
+                            console.log(rej);    
+                        })
+                    }
+                },
+                (rej) => {console.log(rej)}
+            );
+        } else{
+            theMovieDb.account.getInformation({'session_id': this.state.session_id}, (res) => {
+                this.setState({user_id: JSON.parse(res).id});
+                this.commitWatchMovie(id);                                
+            },
+            (rej) => {
+                console.log(rej);
+            })
+        }
+    }
+
+    commitWatchMovie(id){
+        theMovieDb.account.getMovieWatchlist({'id': this.state.user_id, 'session_id': this.state.session_id},
+            (res) => {
+                this.setState({watch_movies: res.results});                    
+                let results = JSON.parse(res).results;                    
+                let isToBeWatched = results.filter(movie => 
+                    movie.id === id
+                );                
+                theMovieDb.account.addToWatchlist({
+                    'id': this.state.user_id, 
+                    'session_id': this.state.session_id,
+                    'media_type': 'movie',
+                    'media_id': id, 
+                    'watchlist': isToBeWatched.length === 0},
+                    (res) => {                                    
+                        console.log('the movie id ' + id + ' was added to a watchlist')
+                    },
+                    (rej) => {
+                        console.log('the movie id ' + id + ' was removed from watchlist')
+                    }
+                );      
+
+            },
+            (rej) => {
+                console.log(rej);
+            }
+        );        
     }
 
     render(){
         let {classes} = this.props;
-        let data = this.props.data;
-        let requestToken = this.props.request_token;        
+        let data = this.props.data;                
+        let requestToken = this.props.request_token;
         let length = data.length;
         return (            
             <Paper className={classes.root}>
@@ -142,12 +188,8 @@ class SearchResults extends Component{
                                         <TableCell>{result.title}</TableCell>
                                         <TableCell>{result.popularity}</TableCell>
                                         <TableCell>{result.overview}</TableCell>
-                                        <TableCell>
-                                            <StarBorderOutlined onClick={() => {
-                                                this.favoriteIt(result.id, requestToken);                                                 
-                                            } }/> 
-                                        </TableCell>
-                                        <TableCell><TvSharp /></TableCell>
+                                        <TableCell onClick={() => { this.favoriteIt(result.id, requestToken)} }><FavoriteButton/></TableCell>
+                                        <TableCell onClick={() => { this.watchLater(result.id, requestToken)} }><WatchLaterButton/></TableCell>
                                     </TableRow>
                                 )
                                 :
