@@ -169,8 +169,7 @@ class SearchResults extends Component{
             <Paper className={classes.root}>
                 <Table className={classes.table}>
                     <TableHead>
-                        <TableRow>
-                            <TableCell>Id</TableCell>
+                        <TableRow>                            
                             <TableCell>Title</TableCell>
                             <TableCell>Popularity</TableCell>
                             <TableCell>Description</TableCell>
@@ -183,8 +182,7 @@ class SearchResults extends Component{
                             length?
                                 data.map(
                                     (result, i) =>
-                                    <TableRow key={i}>
-                                        <TableCell>{result.id}</TableCell>
+                                    <TableRow key={i}>                                        
                                         <TableCell>{result.title}</TableCell>
                                         <TableCell>{result.popularity}</TableCell>
                                         <TableCell>{result.overview}</TableCell>

@@ -32,11 +32,7 @@ class Menu extends Component{
                     <ListItem button component={Link} to="/search">
                         <ListItemIcon><SearchIcon/></ListItemIcon>
                         <ListItemText primary='Search'></ListItemText>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon><ScheduledIcon/></ListItemIcon>
-                        <ListItemText primary='Watch Later'></ListItemText>
-                    </ListItem>
+                    </ListItem>                    
                 </List>
             </div>
         )

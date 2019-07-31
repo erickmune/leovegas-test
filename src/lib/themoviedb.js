@@ -16,7 +16,7 @@ theMovieDb.common = {
   timeout: 5000,
   language: "en-US",
   generateQuery: function(options) {
-    'use strict';
+    
     var myOptions, query, option;
 
     myOptions = options || {};
@@ -32,13 +32,13 @@ theMovieDb.common = {
     return query;
   },
   validateCallbacks: function(success, error) {
-    'use strict';
+    
     if (typeof success !== "function" || typeof error !== "function") {
       throw "success and error parameters must be functions!";
     }
   },
   validateRequired: function(args, argsReq, opt, optReq, allOpt) {
-    'use strict';
+    
     var i, allOptional;
 
     allOptional = allOpt || false;
@@ -60,11 +60,11 @@ theMovieDb.common = {
     }
   },
   getImage: function(options) {
-    'use strict';
+    
     return theMovieDb.common.images_uri + options.size + "/" + options.file;
   },
   client: function(options, success, error) {
-    'use strict';
+    
     var method, status, xhr;
 
     method = options.method || "GET";
@@ -109,7 +109,7 @@ theMovieDb.common = {
 
 theMovieDb.configurations = {
   getConfiguration: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2);
 
@@ -123,7 +123,7 @@ theMovieDb.configurations = {
     );
   },
   getCountries: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2);
 
@@ -137,7 +137,7 @@ theMovieDb.configurations = {
     );
   },
   getJobs: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2);
 
@@ -151,7 +151,7 @@ theMovieDb.configurations = {
     );
   },
   getLanguages: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2);
 
@@ -165,7 +165,7 @@ theMovieDb.configurations = {
     );
   },
   getPrimaryTranslations: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2);
 
@@ -179,7 +179,7 @@ theMovieDb.configurations = {
     );
   },
   getTimezones: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2);
 
@@ -196,7 +196,7 @@ theMovieDb.configurations = {
 
 theMovieDb.account = {
   getInformation: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id"]);
 
@@ -210,7 +210,7 @@ theMovieDb.account = {
     );
   },
   getLists: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -224,7 +224,7 @@ theMovieDb.account = {
     );
   },
   getFavoritesMovies: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -238,7 +238,7 @@ theMovieDb.account = {
     );
   },
   getFavoritesTvShows: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -252,7 +252,7 @@ theMovieDb.account = {
     );
   },
   addFavorite: function(options, success, error) {
-    'use strict';
+    
     var body;
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id", "media_type", "media_id", "favorite"]);
@@ -277,7 +277,7 @@ theMovieDb.account = {
     );
   },
   getRatedMovies: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -291,7 +291,7 @@ theMovieDb.account = {
     );
   },
   getRatedTvShows: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -305,7 +305,7 @@ theMovieDb.account = {
     );
   },
   getRatedTvEpisodes: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -319,7 +319,7 @@ theMovieDb.account = {
     );
   },
   getMovieWatchlist: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -333,7 +333,7 @@ theMovieDb.account = {
     );
   },
   getTvShowsWatchlist: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -347,7 +347,7 @@ theMovieDb.account = {
     );
   },
   addToWatchlist: function(options, success, error) {
-    'use strict';
+    
 
     var body;
 
@@ -375,7 +375,7 @@ theMovieDb.account = {
 
 theMovieDb.authentication = {
   generateToken: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2);
 
@@ -389,13 +389,13 @@ theMovieDb.authentication = {
     );
   },
   askPermissions: function(options) {
-    'use strict';
+    
 
     window.open("https://www.themoviedb.org/authenticate/" + options.token + "?redirect_to=" + options.redirect_to);
 
   },
   validateUser: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["request_token", "username", "password"]);
 
@@ -409,7 +409,7 @@ theMovieDb.authentication = {
     );
   },
   generateSession: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["request_token"]);
 
@@ -423,7 +423,7 @@ theMovieDb.authentication = {
     );
   },
   generateGuestSession: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2);
 
@@ -440,7 +440,7 @@ theMovieDb.authentication = {
 
 theMovieDb.certifications = {
   getMovieList: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2);
 
@@ -454,7 +454,7 @@ theMovieDb.certifications = {
     );
   },
   getTvList: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2);
 
@@ -471,7 +471,7 @@ theMovieDb.certifications = {
 
 theMovieDb.changes = {
   getMovieChanges: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -485,7 +485,7 @@ theMovieDb.changes = {
     );
   },
   getPersonChanges: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -499,7 +499,7 @@ theMovieDb.changes = {
     );
   },
   getTvChanges: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -516,7 +516,7 @@ theMovieDb.changes = {
 
 theMovieDb.collections = {
   getDetails: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -530,7 +530,7 @@ theMovieDb.collections = {
     );
   },
   getImages: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -544,7 +544,7 @@ theMovieDb.collections = {
     );
   },
   getTranslations: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -561,7 +561,7 @@ theMovieDb.collections = {
 
 theMovieDb.companies = {
   getDetails: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -575,7 +575,7 @@ theMovieDb.companies = {
     );
   },
   getAlternativeNames: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -593,7 +593,7 @@ theMovieDb.companies = {
 
 theMovieDb.credits = {
   getDetails: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -610,7 +610,7 @@ theMovieDb.credits = {
 
 theMovieDb.discover = {
   getMovies: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -624,7 +624,7 @@ theMovieDb.discover = {
     );
   },
   getTvShows: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -642,7 +642,7 @@ theMovieDb.discover = {
 
 theMovieDb.find = {
   getById: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id", "external_source"]);
 
@@ -659,7 +659,7 @@ theMovieDb.find = {
 
 theMovieDb.genres = {
   getMovieList: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -673,7 +673,7 @@ theMovieDb.genres = {
     );
   },
   getMovies: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -687,7 +687,7 @@ theMovieDb.genres = {
     );
   },
   getTvList: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -705,7 +705,7 @@ theMovieDb.genres = {
 
 theMovieDb.guestSession = {
   getRatedMovies: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, ["id"]);
 
@@ -719,7 +719,7 @@ theMovieDb.guestSession = {
     );
   },
   getRatedTvShows: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, ["id"]);
 
@@ -733,7 +733,7 @@ theMovieDb.guestSession = {
     );
   },
   getRatedTvEpisodes: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, ["id"]);
 
@@ -750,7 +750,7 @@ theMovieDb.guestSession = {
 
 theMovieDb.keywords = {
   getById: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -764,7 +764,7 @@ theMovieDb.keywords = {
     );
   },
   getMovies: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -781,7 +781,7 @@ theMovieDb.keywords = {
 
 theMovieDb.lists = {
   getById: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -795,7 +795,7 @@ theMovieDb.lists = {
     );
   },
   getStatusById: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id", "movie_id"]);
 
@@ -809,7 +809,7 @@ theMovieDb.lists = {
     );
   },
   addList: function(options, success, error) {
-    'use strict';
+    
 
     var body;
 
@@ -842,7 +842,7 @@ theMovieDb.lists = {
     );
   },
   addItem: function(options, success, error) {
-    'use strict';
+    
 
     var body;
 
@@ -865,7 +865,7 @@ theMovieDb.lists = {
     );
   },
   removeItem: function(options, success, error) {
-    'use strict';
+    
 
     var body;
 
@@ -888,7 +888,7 @@ theMovieDb.lists = {
     );
   },
   removeList: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -904,7 +904,7 @@ theMovieDb.lists = {
     );
   },
   clearList: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id", "confirm"]);
 
@@ -924,7 +924,7 @@ theMovieDb.lists = {
 
 theMovieDb.movies = {
   getById: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -938,7 +938,7 @@ theMovieDb.movies = {
     );
   },
   getAccountStates: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -952,7 +952,7 @@ theMovieDb.movies = {
     );
   },
   getAccountStatesGuest: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["guest_session_id", "id"]);
 
@@ -966,7 +966,7 @@ theMovieDb.movies = {
     );
   },
   getAlternativeTitles: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -980,7 +980,7 @@ theMovieDb.movies = {
     );
   },
   getChanges: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -994,7 +994,7 @@ theMovieDb.movies = {
     );
   },
   getCredits: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1008,7 +1008,7 @@ theMovieDb.movies = {
     );
   },
   getExternalIds: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1022,7 +1022,7 @@ theMovieDb.movies = {
     );
   },
   getImages: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1036,7 +1036,7 @@ theMovieDb.movies = {
     );
   },
   getKeywords: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1050,7 +1050,7 @@ theMovieDb.movies = {
     );
   },
   getReleases: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1064,7 +1064,7 @@ theMovieDb.movies = {
     );
   },
   getVideos: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1078,7 +1078,7 @@ theMovieDb.movies = {
     );
   },
   getTranslations: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1092,7 +1092,7 @@ theMovieDb.movies = {
     );
   },
   getRecommendations: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1106,7 +1106,7 @@ theMovieDb.movies = {
     );
   },
   getSimilarMovies: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1120,7 +1120,7 @@ theMovieDb.movies = {
     );
   },
   getReviews: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1134,7 +1134,7 @@ theMovieDb.movies = {
     );
   },
   getLists: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1148,7 +1148,7 @@ theMovieDb.movies = {
     );
   },
   getLatest: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2);
 
@@ -1162,7 +1162,7 @@ theMovieDb.movies = {
     );
   },
   getUpcoming: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -1176,7 +1176,7 @@ theMovieDb.movies = {
     );
   },
   getNowPlaying: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -1190,7 +1190,7 @@ theMovieDb.movies = {
     );
   },
   getPopular: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -1204,7 +1204,7 @@ theMovieDb.movies = {
     );
   },
   getTopRated: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -1218,7 +1218,7 @@ theMovieDb.movies = {
     );
   },
   rate: function(options, rate, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 4, options, ["session_id", "id"]);
 
@@ -1237,7 +1237,7 @@ theMovieDb.movies = {
     );
   },
   rateGuest: function(options, rate, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 4, options, ["guest_session_id", "id"]);
 
@@ -1256,7 +1256,7 @@ theMovieDb.movies = {
     );
   },
   removeRate: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -1273,7 +1273,7 @@ theMovieDb.movies = {
     );
   },
   removeRateGuest: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["guest_session_id", "id"]);
 
@@ -1293,7 +1293,7 @@ theMovieDb.movies = {
 
 theMovieDb.networks = {
   getById: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1307,7 +1307,7 @@ theMovieDb.networks = {
     );
   },
   getAlternativeNames: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1324,7 +1324,7 @@ theMovieDb.networks = {
 
 theMovieDb.people = {
   getById: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1338,7 +1338,7 @@ theMovieDb.people = {
     );
   },
   getMovieCredits: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1352,7 +1352,7 @@ theMovieDb.people = {
     );
   },
   getTvCredits: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1366,7 +1366,7 @@ theMovieDb.people = {
     );
   },
   getCredits: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1380,7 +1380,7 @@ theMovieDb.people = {
     );
   },
   getExternalIds: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1394,7 +1394,7 @@ theMovieDb.people = {
     );
   },
   getImages: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1408,7 +1408,7 @@ theMovieDb.people = {
     );
   },
   getTaggedImages: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1422,7 +1422,7 @@ theMovieDb.people = {
     );
   },
   getChanges: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1436,7 +1436,7 @@ theMovieDb.people = {
     );
   },
   getPopular: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -1450,7 +1450,7 @@ theMovieDb.people = {
     );
   },
   getLatest: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2);
 
@@ -1467,7 +1467,7 @@ theMovieDb.people = {
 
 theMovieDb.reviews = {
   getById: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1484,7 +1484,7 @@ theMovieDb.reviews = {
 
 theMovieDb.search = {
   getMovie: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
 
@@ -1498,7 +1498,7 @@ theMovieDb.search = {
     );
   },
   getCollection: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
 
@@ -1512,7 +1512,7 @@ theMovieDb.search = {
     );
   },
   getTv: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
 
@@ -1526,7 +1526,7 @@ theMovieDb.search = {
     );
   },
   getPerson: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
 
@@ -1540,7 +1540,7 @@ theMovieDb.search = {
     );
   },
   getCompany: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
 
@@ -1554,7 +1554,7 @@ theMovieDb.search = {
     );
   },
   getKeyword: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
 
@@ -1568,7 +1568,7 @@ theMovieDb.search = {
     );
   },
   getMulti: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["query"]);
 
@@ -1585,7 +1585,7 @@ theMovieDb.search = {
 
 theMovieDb.tv = {
   getById: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1599,7 +1599,7 @@ theMovieDb.tv = {
     );
   },
   getAccountStates: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -1613,7 +1613,7 @@ theMovieDb.tv = {
     );
   },
   getAccountStatesGuest: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["guest_session_id", "id"]);
 
@@ -1627,7 +1627,7 @@ theMovieDb.tv = {
     );
   },
   getAlternativeTitles: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1641,7 +1641,7 @@ theMovieDb.tv = {
     );
   },
   getChanges: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1655,7 +1655,7 @@ theMovieDb.tv = {
     );
   },
   getContentRatings: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1669,7 +1669,7 @@ theMovieDb.tv = {
     );
   },
   getCredits: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1683,7 +1683,7 @@ theMovieDb.tv = {
     );
   },
   getExternalIds: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1697,7 +1697,7 @@ theMovieDb.tv = {
     );
   },
   getImages: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1711,7 +1711,7 @@ theMovieDb.tv = {
     );
   },
   getKeywords: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1726,7 +1726,7 @@ theMovieDb.tv = {
 
   },
   getRecommendations: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1740,7 +1740,7 @@ theMovieDb.tv = {
     );
   },
   getReviews: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1754,7 +1754,7 @@ theMovieDb.tv = {
     );
   },
   getScreenedTheatrically: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1768,7 +1768,7 @@ theMovieDb.tv = {
     );
   },
   getSimilar: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1782,7 +1782,7 @@ theMovieDb.tv = {
     );
   },
   getTranslations: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1796,7 +1796,7 @@ theMovieDb.tv = {
     );
   },
   getVideos: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1810,7 +1810,7 @@ theMovieDb.tv = {
     );
   },
   getAiringToday: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -1824,7 +1824,7 @@ theMovieDb.tv = {
     );
   },
   getLatest: function(success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 2, "", "", true);
 
@@ -1838,7 +1838,7 @@ theMovieDb.tv = {
     );
   },
   getOnTheAir: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -1852,7 +1852,7 @@ theMovieDb.tv = {
     );
   },
   getPopular: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -1866,7 +1866,7 @@ theMovieDb.tv = {
     );
   },
   getTopRated: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, "", "", true);
 
@@ -1880,7 +1880,7 @@ theMovieDb.tv = {
     );
   },
   rate: function(options, rate, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 4, options, ["session_id", "id"]);
 
@@ -1899,7 +1899,7 @@ theMovieDb.tv = {
     );
   },
   rateGuest: function(options, rate, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 4, options, ["guest_session_id", "id"]);
 
@@ -1918,7 +1918,7 @@ theMovieDb.tv = {
     );
   },
   removeRate: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "id"]);
 
@@ -1935,7 +1935,7 @@ theMovieDb.tv = {
     );
   },
   removeRateGuest: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["guest_session_id", "id"]);
 
@@ -1955,7 +1955,7 @@ theMovieDb.tv = {
 
 theMovieDb.tvSeasons = {
   getById: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["season_number", "id"]);
 
@@ -1969,7 +1969,7 @@ theMovieDb.tvSeasons = {
     );
   },
   getChanges: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -1983,7 +1983,7 @@ theMovieDb.tvSeasons = {
     );
   },
   getAccountStates: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "season_number", "id"]);
 
@@ -1997,7 +1997,7 @@ theMovieDb.tvSeasons = {
     );
   },
   getAccountStatesGuest: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["guest_session_id", "season_number", "id"]);
 
@@ -2011,7 +2011,7 @@ theMovieDb.tvSeasons = {
     );
   },
   getCredits: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["season_number", "id"]);
 
@@ -2025,7 +2025,7 @@ theMovieDb.tvSeasons = {
     );
   },
   getExternalIds: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["season_number", "id"]);
 
@@ -2039,7 +2039,7 @@ theMovieDb.tvSeasons = {
     );
   },
   getImages: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["season_number", "id"]);
 
@@ -2053,7 +2053,7 @@ theMovieDb.tvSeasons = {
     );
   },
   getVideos: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["season_number", "id"]);
 
@@ -2070,7 +2070,7 @@ theMovieDb.tvSeasons = {
 
 theMovieDb.tvEpisodes = {
   getById: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["episode_number", "season_number", "id"]);
 
@@ -2084,7 +2084,7 @@ theMovieDb.tvEpisodes = {
     );
   },
   getChanges: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["id"]);
 
@@ -2098,7 +2098,7 @@ theMovieDb.tvEpisodes = {
     );
   },
   getAccountStates: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["session_id", "episode_number", "season_number", "id"]);
 
@@ -2112,7 +2112,7 @@ theMovieDb.tvEpisodes = {
     );
   },
   getAccountStatesGuest: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["guest_session_id", "episode_number", "season_number", "id"]);
 
@@ -2126,7 +2126,7 @@ theMovieDb.tvEpisodes = {
     );
   },
   getCredits: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["episode_number", "season_number", "id"]);
 
@@ -2140,7 +2140,7 @@ theMovieDb.tvEpisodes = {
     );
   },
   getExternalIds: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["episode_number", "season_number", "id"]);
 
@@ -2154,7 +2154,7 @@ theMovieDb.tvEpisodes = {
     );
   },
   getImages: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["episode_number", "season_number", "id"]);
 
@@ -2168,7 +2168,7 @@ theMovieDb.tvEpisodes = {
     );
   },
   getVideos: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["episode_number", "season_number", "id"]);
 
@@ -2182,7 +2182,7 @@ theMovieDb.tvEpisodes = {
     );
   },
   rate: function(options, rate, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 4, options, ["episode_number", "season_number", "session_id", "id"]);
 
@@ -2201,7 +2201,7 @@ theMovieDb.tvEpisodes = {
     );
   },
   rateGuest: function(options, rate, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 4, options, ["episode_number", "season_number", "guest_session_id", "id"]);
 
@@ -2220,7 +2220,7 @@ theMovieDb.tvEpisodes = {
     );
   },
   removeRate: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["episode_number", "season_number", "session_id", "id"]);
 
@@ -2236,7 +2236,7 @@ theMovieDb.tvEpisodes = {
     );
   },
   removeRateGuest: function(options, success, error) {
-    'use strict';
+    
 
     theMovieDb.common.validateRequired(arguments, 3, options, ["episode_number", "season_number", "guest_session_id", "id"]);
 
