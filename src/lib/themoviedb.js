@@ -391,7 +391,8 @@ theMovieDb.authentication = {
   askPermissions: function(options) {
     
 
-    window.open("https://www.themoviedb.org/authenticate/" + options.token + "?redirect_to=" + options.redirect_to);
+    window.open("https://www.themoviedb.org/authenticate/" + options.token);
+    window.close();
 
   },
   validateUser: function(options, success, error) {

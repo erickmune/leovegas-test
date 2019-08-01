@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import {ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,7 +12,9 @@ import theMovieDb from '../../../lib/themoviedb';
 import FavoriteButton from './favoriteButton';
 import WatchLaterButton from './watchLaterButton';
 
-let styles = {
+const posterBaseURL = 'https://image.tmdb.org/t/p/w200';
+
+const styles = {
     root: {
         marginTop: '30px',
         marginBottom: '30px',
@@ -42,17 +46,17 @@ class SearchResults extends Component{
         this.props.callback(id);
     }
 
-    favoriteIt(id, token){                      
+    favoriteIt(movieObj, token){                      
         if(!this.state.session_id){
             theMovieDb.authentication.generateSession({'request_token': token}, 
                 (res) => {
-                    let result = JSON.parse(res);
+                    const result = JSON.parse(res);
                     if(result.success){    
                         this.setState({session_id: result.session_id});
                         this.updatePageSession(this.state.session_id);
                         theMovieDb.account.getInformation({'session_id': this.state.session_id}, (res) => {
                             this.setState({user_id: JSON.parse(res).id});
-                            this.commitFavoriteMovie(id);                                                          
+                            this.commitFavoriteMovie(movieObj);                                                          
                         },
                         (rej) => {
                             console.log(rej);    
@@ -64,7 +68,7 @@ class SearchResults extends Component{
         } else{
             theMovieDb.account.getInformation({'session_id': this.state.session_id}, (res) => {
                 this.setState({user_id: JSON.parse(res).id});
-                this.commitFavoriteMovie(id);                                
+                this.commitFavoriteMovie(movieObj);                                
             },
             (rej) => {
                 console.log(rej);
@@ -72,25 +76,39 @@ class SearchResults extends Component{
         }
     }
 
-    commitFavoriteMovie(id){                
+    commitFavoriteMovie(movieObj){                
         theMovieDb.account.getFavoritesMovies({'id': this.state.user_id, 'session_id': this.state.session_id},
             (res) => {
                 this.setState({favorite_movies: res.results});                    
-                let results = JSON.parse(res).results;                    
-                let isFavoriteMovie = results.filter(movie => 
-                    movie.id === id
+                const results = JSON.parse(res).results;                    
+                const isFavoriteMovie = results.filter(movie => 
+                    movie.id === movieObj.id
                 );
                 theMovieDb.account.addFavorite({
                     'id': this.state.user_id, 
                     'session_id': this.state.session_id,
                     'media_type': 'movie',
-                    'media_id': id, 
+                    'media_id': movieObj.id, 
                     'favorite': isFavoriteMovie.length === 0},
-                    (res) => {                                    
-                        console.log('the movie id ' + id + ' is now a favorite movie')
+                    (res) => {
+                        toast.success('"' + movieObj.title + '" is now a favorite movie', 
+                            {
+                            position: "bottom-left",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,                                                        
+                            }
+                        )                        
                     },
                     (rej) => {
-                        console.log('the movie id ' + id + ' is no more a favorite movie')
+                        toast.error('"' + movieObj.title + '" is no more a favorite movie', 
+                            {
+                            position: "bottom-left",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,                            
+                            }
+                        );                        
                     }
                 );      
 
@@ -101,17 +119,17 @@ class SearchResults extends Component{
         );        
     }
 
-    watchLater(id, token){
+    watchLater(movieObj, token){
         if(!this.state.session_id){
             theMovieDb.authentication.generateSession({'request_token': token}, 
                 (res) => {
-                    let result = JSON.parse(res);
+                    const result = JSON.parse(res);
                     if(result.success){    
                         this.setState({session_id: result.session_id});
                         this.updatePageSession(this.state.session_id);
                         theMovieDb.account.getInformation({'session_id': this.state.session_id}, (res) => {
                             this.setState({user_id: JSON.parse(res).id});
-                            this.commitWatchMovie(id);                                                          
+                            this.commitWatchMovie(movieObj);                                                          
                         },
                         (rej) => {
                             console.log(rej);    
@@ -123,7 +141,7 @@ class SearchResults extends Component{
         } else{
             theMovieDb.account.getInformation({'session_id': this.state.session_id}, (res) => {
                 this.setState({user_id: JSON.parse(res).id});
-                this.commitWatchMovie(id);                                
+                this.commitWatchMovie(movieObj);                                
             },
             (rej) => {
                 console.log(rej);
@@ -131,28 +149,41 @@ class SearchResults extends Component{
         }
     }
 
-    commitWatchMovie(id){
+    commitWatchMovie(movieObj){
         theMovieDb.account.getMovieWatchlist({'id': this.state.user_id, 'session_id': this.state.session_id},
             (res) => {
                 this.setState({watch_movies: res.results});                    
-                let results = JSON.parse(res).results;                    
-                let isToBeWatched = results.filter(movie => 
-                    movie.id === id
+                const results = JSON.parse(res).results;                    
+                const isToBeWatched = results.filter(movie => 
+                    movie.id === movieObj.id
                 );                
                 theMovieDb.account.addToWatchlist({
                     'id': this.state.user_id, 
                     'session_id': this.state.session_id,
                     'media_type': 'movie',
-                    'media_id': id, 
+                    'media_id': movieObj.id, 
                     'watchlist': isToBeWatched.length === 0},
-                    (res) => {                                    
-                        console.log('the movie id ' + id + ' was added to a watchlist')
+                    (res) => {
+                        toast.success('"' + movieObj.title + '" was added to a watchlist', 
+                            {
+                            position: "bottom-left",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,                                                        
+                            }
+                        )                            
                     },
                     (rej) => {
-                        console.log('the movie id ' + id + ' was removed from watchlist')
+                        toast.error('"' + movieObj.title + '" was removed from watchlist', 
+                            {
+                            position: "bottom-left",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,                            
+                            }
+                        );                          
                     }
                 );      
-
             },
             (rej) => {
                 console.log(rej);
@@ -167,9 +198,21 @@ class SearchResults extends Component{
         let length = data.length;
         return (            
             <Paper className={classes.root}>
+                <ToastContainer
+                    position="bottom-left"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnVisibilityChange
+                    draggable
+                    pauseOnHover
+                />
                 <Table className={classes.table}>
                     <TableHead>
-                        <TableRow>                            
+                        <TableRow>            
+                            <TableCell>Poster</TableCell>                
                             <TableCell>Title</TableCell>
                             <TableCell>Popularity</TableCell>
                             <TableCell>Description</TableCell>
@@ -182,12 +225,13 @@ class SearchResults extends Component{
                             length?
                                 data.map(
                                     (result, i) =>
-                                    <TableRow key={i}>                                        
+                                    <TableRow key={i}>
+                                        <TableCell><img alt={result.title} srcSet={posterBaseURL + result.poster_path}/></TableCell>                                      
                                         <TableCell>{result.title}</TableCell>
                                         <TableCell>{result.popularity}</TableCell>
                                         <TableCell>{result.overview}</TableCell>
-                                        <TableCell onClick={() => { this.favoriteIt(result.id, requestToken)} }><FavoriteButton/></TableCell>
-                                        <TableCell onClick={() => { this.watchLater(result.id, requestToken)} }><WatchLaterButton/></TableCell>
+                                        <TableCell onClick={() => { this.favoriteIt({'id': result.id, 'title': result.title}, requestToken)} }><FavoriteButton/></TableCell>
+                                        <TableCell onClick={() => { this.watchLater({'id': result.id, 'title': result.title}, requestToken)} }><WatchLaterButton/></TableCell>
                                     </TableRow>
                                 )
                                 :

@@ -27,43 +27,44 @@ class SearchBar extends Component {
 
     constructor(props){
         super(props);
-        this.state = {value: ''};
+        this.state = {searchBarValue: ''};
 
         this.handleChange = this.handleChange.bind(this);
         this.searchMovies = this.searchMovies.bind(this);
     }
 
-    getContent(values){
-        this.props.callback(values);
+    getContent(searchResults){
+        this.props.callback(searchResults);
     }
 
     handleChange(event){
-        this.setState({value: event.target.value});
+        this.setState({searchBarValue: event.target.value});
     }
 
     searchMovies(){
-        theMovieDb.search.getMovie({"query": encodeURIComponent(this.state.value)}, (res) => {
-            let requestResults = [];
+        theMovieDb.search.getMovie({'query': encodeURIComponent(this.state.searchBarValue)}, (res) => {
+            const requestResults = [];
             JSON.parse(res).results.map(result => requestResults.push(result));
+            console.log(requestResults);
             this.getContent(requestResults);
         }, (res) => { console.log(res.message) })
     }
 
     render(){
 
-        let {classes} = this.props;
+        const {classes} = this.props;
 
         return(
             <>
                 <CssBaseline />
                 <Container className={classes.container}>
                     <TextField
-                        id="standard-search"
-                        label="Movie Title Here..."
-                        type="search"
+                        id='standard-search'
+                        label='Movie Title Here...'
+                        type='search'
                         className={classes.textField}
-                        margin="normal"
-                        value={this.state.value}
+                        margin='normal'
+                        value={this.state.searchBarValue}
                         onChange={this.handleChange}
                     />
                     <IconButton onClick={() => this.searchMovies()} aria-label='Search for a Universe!'>

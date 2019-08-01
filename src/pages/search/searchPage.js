@@ -1,18 +1,24 @@
 import React, {Component} from 'react';
-import '../../App.css';
 import Menu from '../common/components/menu';
 import SearchBar from './components/searchBar';
 import SearchResults from './components/searchResults';
 import theMovieDb from '../../lib/themoviedb';
+import { withStyles } from "@material-ui/styles";
+
+let styles = {
+    App:{
+        textAlign: 'center'
+    }
+};
 
 class SearchPage extends Component{
 
     constructor(){
         super();
         this.state = ({
-            data: "",
-            session_id: "",
-            request_token: "",
+            data: '',
+            session_id: '',
+            request_token: '',
             generateRequestToken: this.authenticateUser()            
         })
     }
@@ -23,7 +29,7 @@ class SearchPage extends Component{
             let result = JSON.parse(res);
             if(result.success){
                 token = result.request_token;                
-                theMovieDb.authentication.askPermissions({"token": token});
+                theMovieDb.authentication.askPermissions({'token': token, 'redirect_to': ''});
                 this.setState({request_token: token});
             }   
         }, 
@@ -43,10 +49,12 @@ class SearchPage extends Component{
     }
 
     render(){
+        const {classes} = this.props;
+
         return(            
-            <div className="App">                            
+            <div className={classes.App}>                            
                 <h1>LeoMovies Assignment</h1>
-                <Menu></Menu>
+                <Menu/>
                 <SearchBar callback={this.updateResults.bind(this)} />
                 <SearchResults callback={this.updateSessionId.bind(this)}
                  data={this.state.data} 
@@ -57,4 +65,4 @@ class SearchPage extends Component{
     }
 }
 
-export default SearchPage
+export default withStyles(styles)(SearchPage);

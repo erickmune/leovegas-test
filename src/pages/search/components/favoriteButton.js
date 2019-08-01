@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import StarBorderOutlined from "@material-ui/icons/StarBorderOutlined";
-import StarRate from "@material-ui/icons/StarRate";
+import StarBorderOutlined from '@material-ui/icons/StarBorderOutlined';
+import StarRate from '@material-ui/icons/StarRate';
 
 export default class favoriteButton extends Component {
 
@@ -8,7 +8,7 @@ export default class favoriteButton extends Component {
         favorite: false
     })
 
-    favOrunfav = () => {
+    favOrUnfav = () => {
         this.setState({
             favorite: !this.state.favorite
         })
@@ -17,12 +17,12 @@ export default class favoriteButton extends Component {
     render() {
         if(this.state.favorite){
             return (                                   
-                <StarRate onClick={this.favOrunfav}/>
+                <StarRate onClick={this.favOrUnfav}/>
             )
         }
         else{
             return (
-                <StarBorderOutlined onClick={this.favOrunfav}/>                
+                <StarBorderOutlined onClick={this.favOrUnfav}/>                
             )
         }        
     }
