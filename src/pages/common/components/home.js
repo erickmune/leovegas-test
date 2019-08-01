@@ -8,7 +8,7 @@ let styles = {
         marginTop: '30px',
         marginBottom: '30px',
         overflowX: 'auto',
-        width: '80% !important',
+        width: '75% !important',
         padding: '35px',
         float: 'right',
         marginRight: '2%',
